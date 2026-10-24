@@ -13,15 +13,63 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px;ma
 .section-title{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:28px 0 13px}.section-title h2{margin:0;font-size:19px;letter-spacing:-.025em}.section-title p{margin:3px 0 0;color:var(--muted);font-size:12px}
 .presets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.preset{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px;text-align:left;min-width:0}.preset.active{border-color:var(--cyan);box-shadow:0 0 0 1px #64e6d233 inset}.preset .icon{font-size:20px;margin-bottom:9px}.preset strong{display:block;font-size:13px}.preset small{display:block;color:var(--muted);font-size:11px;margin-top:4px;line-height:1.45}
 .workspace{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;align-items:start}.panel{padding:20px;min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}.panel-head h3{margin:0;font-size:15px}.panel-head span{color:var(--muted);font-size:11px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{min-width:0}.field.full{grid-column:1/-1}.field label{display:flex;justify-content:space-between;gap:8px;color:#c9d3eb;font-size:12px;font-weight:700;margin-bottom:6px}.field label small{font-weight:400;color:var(--muted)}input,textarea,select{width:100%;background:#0b1120;border:1px solid #2b3650;border-radius:10px;color:var(--text);padding:10px 11px;min-width:0}input::placeholder,textarea::placeholder{color:#65718e}textarea{resize:vertical;min-height:92px;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}.help{color:var(--muted);font-size:11px;margin-top:5px}.inline-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.actions button{flex:1}.config-note{margin-top:12px;background:#0b1120;border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--muted);font-size:11px}.config-note b{color:var(--cyan)}
-.machine-panel{padding:0;overflow:hidden}.machine-top{padding:20px 20px 16px;border-bottom:1px solid var(--line)}.machine-top .panel-head{margin-bottom:14px}.readouts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.readout{background:#0b1120;border:1px solid var(--line);border-radius:11px;padding:10px 12px;min-width:0}.readout span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}.readout strong{display:block;font-size:15px;margin-top:3px;overflow-wrap:anywhere}.readout strong.cyan{color:var(--cyan)}.tape-wrap{padding:20px}.tape-label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:10px}.tape{display:flex;gap:6px;overflow-x:auto;padding:12px 4px 17px;scrollbar-color:#465575 #101626}.cell{flex:0 0 48px;height:56px;border:1px solid #35425f;background:#10182b;border-radius:10px;display:flex;align-items:center;justify-content:center;font:20px ui-monospace,monospace;position:relative}.cell.head{border:2px solid var(--cyan);background:#15323a;box-shadow:0 0 0 3px #64e6d21a,0 5px 20px #64e6d21c;color:#fff}.cell.head:after{content:"HEAD";position:absolute;bottom:-17px;font:8px ui-sans-serif,sans-serif;letter-spacing:.12em;color:var(--cyan)}.cell.blank{color:#52617e}.machine-controls{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 18px}.machine-controls button{flex:1;min-width:80px}.speed{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;padding:0 20px 18px}.speed input{width:100%;padding:0;accent-color:var(--cyan)}.rule-builder{padding:12px;background:#0b1120;border:1px solid var(--line);border-radius:12px}.rule-fields{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.rule-fields .field label{font-size:10px}.rule-fields input,.rule-fields select{padding:9px 8px;font-size:12px}.add-rule{width:100%;margin-top:10px}.state-clock-wrap{padding:18px 20px 8px;border-bottom:1px solid var(--line)}.state-clock{height:190px;max-width:430px;margin:0 auto;position:relative}.clock-arrows{position:absolute;inset:0;width:100%;height:100%}.state-node{position:absolute;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#10182b;border:2px solid #465575;color:#dce4ff;font:700 13px ui-monospace,monospace;transition:background .25s,border-color .25s,box-shadow .25s,transform .25s;z-index:2}.state-node.active{border-color:var(--cyan);background:#153a40;box-shadow:0 0 0 5px #64e6d21b,0 0 24px #64e6d244;color:var(--cyan);transform:scale(1.08)}.state-node.accept{border-color:var(--green)}.state-node.reject{border-color:var(--pink)}.node-0{left:calc(50% - 29px);top:0}.node-1{right:calc(7%);top:calc(50% - 29px)}.node-2{left:calc(50% - 29px);bottom:0}.node-3{left:7%;top:calc(50% - 29px)}.clock-hand{position:absolute;z-index:3;left:50%;top:50%;width:2px;height:57px;transform-origin:50% 0;transform:rotate(0deg);transition:transform .35s cubic-bezier(.2,.8,.2,1);pointer-events:none}.clock-hand span{position:absolute;top:-4px;left:-5px;width:12px;height:12px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px #64e6d2}.clock-center{position:absolute;left:calc(50% - 17px);top:calc(50% - 17px);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#202943;border:1px solid #465575;color:var(--violet);font-weight:800;z-index:4}.trace{border-top:1px solid var(--line);padding:18px 20px}.trace-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.trace-head strong{font-size:13px}.trace-head span{font-size:11px;color:var(--muted)}.trace-list{max-height:185px;overflow:auto;display:flex;flex-direction:column;gap:6px}.trace-item{display:grid;grid-template-columns:32px 1fr;gap:9px;align-items:start;font:11px/1.5 ui-monospace,monospace;color:var(--muted);padding:8px;background:#0b1120;border-radius:8px}.trace-item .n{color:var(--violet)}.trace-item.current{border:1px solid #64e6d255;color:var(--text)}.trace-item b{color:var(--cyan);font-weight:600}.empty{font-size:12px;color:var(--muted);padding:14px;text-align:center;border:1px dashed var(--line);border-radius:10px}
+.machine-panel{padding:0;overflow:hidden}.machine-top{padding:20px 20px 16px;border-bottom:1px solid var(--line)}.machine-top .panel-head{margin-bottom:14px}.readouts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.readout{background:#0b1120;border:1px solid var(--line);border-radius:11px;padding:10px 12px;min-width:0}.readout span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}.readout strong{display:block;font-size:15px;margin-top:3px;overflow-wrap:anywhere}.readout strong.cyan{color:var(--cyan)}.tape-wrap{padding:20px}.tape-label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-bottom:10px}.tape{display:flex;gap:6px;overflow-x:auto;padding:12px 4px 17px;scrollbar-color:#465575 #101626}.cell{flex:0 0 48px;height:56px;border:1px solid #35425f;background:#10182b;border-radius:10px;display:flex;align-items:center;justify-content:center;font:20px ui-monospace,monospace;position:relative}.cell.head{border:2px solid var(--cyan);background:#15323a;box-shadow:0 0 0 3px #64e6d21a,0 5px 20px #64e6d21c;color:#fff}.cell.head:after{content:"HEAD";position:absolute;bottom:-17px;font:8px ui-sans-serif,sans-serif;letter-spacing:.12em;color:var(--cyan)}.cell.blank{color:#52617e}.machine-controls{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 18px}.machine-controls button{flex:1;min-width:80px}.speed{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;padding:0 20px 18px}.speed input{width:100%;padding:0;accent-color:var(--cyan)}.rule-builder{padding:12px;background:#0b1120;border:1px solid var(--line);border-radius:12px}.rule-fields{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.rule-fields .field label{font-size:10px}.rule-fields input,.rule-fields select{padding:9px 8px;font-size:12px}.rule-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.add-rule{width:100%;margin-top:10px}.rule-actions button:last-child{margin-top:10px;font-size:12px}.state-clock-wrap{padding:18px 20px 8px;border-bottom:1px solid var(--line)}.state-clock{height:190px;max-width:430px;margin:0 auto;position:relative}.clock-arrows{position:absolute;inset:0;width:100%;height:100%}.state-nodes{position:absolute;inset:0;z-index:2}.state-node{position:absolute;width:clamp(42px,5vw,58px);height:clamp(42px,5vw,58px);border-radius:50%;display:grid;place-items:center;padding:3px;text-align:center;overflow-wrap:anywhere;background:#10182b;border:2px solid #465575;color:#dce4ff;font:700 11px ui-monospace,monospace;transform:translate(-50%,-50%);transition:background .22s,border-color .22s,box-shadow .22s,scale .22s;z-index:2}.state-node.active{border-color:var(--cyan);background:#153a40;box-shadow:0 0 0 5px #64e6d21b,0 0 24px #64e6d244;color:var(--cyan);scale:1.08}.state-node.accept{border-color:var(--green)}.state-node.reject{border-color:var(--pink)}.clock-hand{position:absolute;z-index:3;left:50%;top:50%;width:2px;height:57px;transform-origin:50% 0;transform:rotate(0deg);transition:transform .35s cubic-bezier(.2,.8,.2,1);pointer-events:none}.clock-hand span{position:absolute;top:-4px;left:-5px;width:12px;height:12px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px #64e6d2}.clock-center{position:absolute;left:calc(50% - 17px);top:calc(50% - 17px);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#202943;border:1px solid #465575;color:var(--violet);font-weight:800;z-index:4}.trace{border-top:1px solid var(--line);padding:18px 20px}.trace-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.trace-head strong{font-size:13px}.trace-head span{font-size:11px;color:var(--muted)}.trace-list{max-height:185px;overflow:auto;display:flex;flex-direction:column;gap:6px}.trace-item{display:grid;grid-template-columns:32px 1fr;gap:9px;align-items:start;font:11px/1.5 ui-monospace,monospace;color:var(--muted);padding:8px;background:#0b1120;border-radius:8px}.trace-item .n{color:var(--violet)}.trace-item.current{border:1px solid #64e6d255;color:var(--text)}.trace-item b{color:var(--cyan);font-weight:600}.empty{font-size:12px;color:var(--muted);padding:14px;text-align:center;border:1px dashed var(--line);border-radius:10px}
 .bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.info{background:#11192a;border:1px solid var(--line);border-radius:16px;padding:18px}.info h3{font-size:14px;margin:0 0 9px}.info p,.info li{font-size:12px;color:var(--muted)}.info ul{padding-left:18px;margin:8px 0 0}.info code{color:var(--cyan);font-family:ui-monospace,monospace}.notice{display:none;margin:0 0 12px;padding:10px 12px;border-radius:10px;font-size:12px}.notice.show{display:block}.notice.error{background:#401e31;color:#ffb3cb;border:1px solid #813b59}.notice.ok{background:#133329;color:#a5f2c1;border:1px solid #27684b}.footer{text-align:center;color:#66728e;font-size:11px;padding-top:26px}
 @media(max-width:950px){.hero{grid-template-columns:1fr}.tuple-card{min-height:150px}.workspace{grid-template-columns:1fr}.presets{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.rule-fields{grid-template-columns:1fr 1fr}.rule-fields .field:last-child{grid-column:1/-1}.state-clock{height:175px}.wrap{padding:18px 12px 30px}header{align-items:flex-start}.status-pill{font-size:0;padding:10px}.status-pill .dot{width:8px;height:8px}.brand h1{font-size:19px}.hero-copy{padding:24px 20px}.hero h2{font-size:34px}.tuple-card{padding:20px}.presets{gap:8px}.preset{padding:12px}.workspace{gap:12px}.panel{padding:15px}.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.inline-fields{grid-template-columns:1fr 1fr}.inline-fields .field:last-child{grid-column:1/-1}.readouts{grid-template-columns:1fr 1fr}.readout:last-child{grid-column:1/-1}.machine-top{padding:15px}.tape-wrap{padding:15px 10px}.machine-controls{padding:0 15px 15px}.speed{padding:0 15px 15px}.trace{padding:15px}.bottom-grid{grid-template-columns:1fr}.section-title{align-items:flex-start;flex-direction:column;gap:4px}}
+
+/* Minimal layout refinement */
+.wrap{max-width:1240px;padding-top:20px}
+header{margin-bottom:18px}
+.hero{gap:14px;margin-bottom:18px}
+.hero-copy,.tuple-card,.panel{box-shadow:none;border-radius:14px}
+.hero-copy{padding:26px 28px}
+.hero h2{font-size:clamp(27px,3.2vw,39px);margin:8px 0 10px}
+.hero-copy p{margin-bottom:16px}
+.tuple-card{padding:20px}
+.section-title{margin:20px 0 10px}
+.presets{gap:9px}
+.preset{padding:12px 13px;border-radius:12px}
+.preset .icon{font-size:17px;margin-bottom:5px}
+.workspace{gap:12px}
+.panel{padding:16px}
+.panel-head{margin-bottom:12px}
+.fields{gap:9px}
+input,textarea,select{border-radius:8px;padding:9px 10px}
+textarea{min-height:78px}
+.rule-builder{padding:10px;border-radius:9px}
+.rule-fields{gap:6px}
+.readout{padding:8px 10px}
+.state-clock-wrap{padding:14px 16px 5px}
+.state-clock{height:168px}
+.tape-wrap{padding:15px}
+.cell{flex-basis:42px;height:49px;border-radius:8px}
+.machine-controls{gap:6px;padding:0 15px 14px}
+.machine-controls button{padding:9px 10px}
+.trace{padding:14px 15px}
+.trace-list{max-height:145px}
+.bottom-grid{gap:12px;margin-top:12px}
+.info{padding:15px;border-radius:12px}
+.footer{padding-top:18px}
+@media(max-width:950px){.hero{grid-template-columns:1fr}.workspace{grid-template-columns:1fr}.hero-copy{padding:24px}}
+@media(max-width:650px){.wrap{padding:14px 10px 24px}.hero{grid-template-columns:1fr}.hero-copy{padding:21px}.tuple-card{min-height:0;padding:16px}.hero h2{font-size:31px}.presets{grid-template-columns:repeat(2,minmax(0,1fr))}.preset{padding:10px}.panel{padding:13px}.rule-fields{grid-template-columns:1fr 1fr}.state-clock{height:150px}.bottom-grid{grid-template-columns:1fr}.section-title{margin-top:17px}}
+
+
+/* State clock v2: unique nodes, responsive orbit, no duplicate fallbacks */
+.state-clock{height:clamp(230px,28vw,340px);max-width:520px;overflow:visible}
+.state-nodes{position:absolute;inset:0;z-index:2}
+.state-node{position:absolute;width:clamp(42px,5vw,58px);height:clamp(42px,5vw,58px);border-radius:50%;display:grid;place-items:center;padding:3px;text-align:center;overflow-wrap:anywhere;background:#10182b;border:2px solid #465575;color:#dce4ff;font:700 11px/1.1 ui-monospace,monospace;transform:translate(-50%,-50%);transition:background .22s,border-color .22s,box-shadow .22s,scale .22s;z-index:2}
+.state-node.active{border-color:var(--cyan);background:#153a40;box-shadow:0 0 0 4px #64e6d21b,0 0 20px #64e6d244;scale:1.07}
+.state-node.accept{border-color:var(--green)}
+.state-node.reject{border-color:var(--pink)}
+.clock-hand{position:absolute;z-index:3;left:50%;top:50%;width:2px;height:clamp(48px,7vw,76px);transform-origin:50% 0;transition:transform .35s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.clock-hand span{position:absolute;top:-4px;left:-5px;width:12px;height:12px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px #64e6d2}
+.clock-center{position:absolute;left:calc(50% - 17px);top:calc(50% - 17px);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#202943;border:1px solid #465575;color:var(--violet);font-weight:800;z-index:4}
+@media(max-width:600px){.state-clock{height:260px}.state-node{width:44px;height:44px;font-size:9px}}
+
 </style>
 </head>
 <body>
-<a href="../../index.html" aria-label="Back to all tools" style="position:sticky;top:8px;z-index:9999;display:inline-flex;gap:8px;margin:8px;padding:9px 13px;border:1px solid #8993a866;border-radius:999px;background:rgba(20,27,43,.92);color:#fff;text-decoration:none;font:600 13px/1.2 system-ui,sans-serif;box-shadow:0 4px 16px #0002">← All tools</a>
-
 <div class="wrap">
 <header>
   <div class="brand"><div class="logo">δ</div><div><h1>Turing Lab</h1><p>Make computation visible.</p></div></div>
@@ -30,8 +78,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px;ma
 <section class="hero">
   <div class="hero-copy">
     <div class="eyebrow">Interactive automata playground</div>
-    <h2>One tape. A few rules.<br><span>Infinite possibilities.</span></h2>
-    <p>Build a Turing machine from scratch, inspect every transition, and watch the tape evolve one step at a time. Your rules, your machine.</p>
+    <h2>Build a machine.<br><span>Watch it compute.</span></h2>
+    <p>Define states and transitions, then run your Turing machine step by step.</p>
     <div class="hero-actions"><button class="primary" onclick="document.getElementById('config').scrollIntoView({behavior:'smooth'})">Build a machine ↘</button><button class="subtle" onclick="loadPreset('palindrome')">Try palindrome check ↗</button></div>
   </div>
   <div class="tuple-card">
@@ -41,14 +89,14 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px;ma
     <div class="legend"><span class="chip"><b>Q</b> states</span><span class="chip"><b>Σ</b> input</span><span class="chip"><b>Γ</b> tape</span><span class="chip"><b>δ</b> rules</span></div>
   </div>
 </section>
-<div class="section-title"><div><h2>Start with a classic</h2><p>Load a working machine, then edit any field to experiment.</p></div></div>
+<div class="section-title"><div><h2>Examples</h2><p>Choose a preset to get started.</p></div></div>
 <section class="presets">
   <button class="preset active" data-preset="palindrome" onclick="loadPreset('palindrome')"><div class="icon">↔️</div><strong>Palindrome checker</strong><small>Accepts binary strings that read the same backward.</small></button>
   <button class="preset" data-preset="unary" onclick="loadPreset('unary')"><div class="icon">➕</div><strong>Unary increment</strong><small>Add one mark to a unary number: 111 → 1111.</small></button>
   <button class="preset" data-preset="binary" onclick="loadPreset('binary')"><div class="icon">01</div><strong>Binary increment</strong><small>Add one to a binary number: 1011 → 1100.</small></button>
   <button class="preset" data-preset="even" onclick="loadPreset('even')"><div class="icon">◎</div><strong>Even number of 1s</strong><small>Accept if the input contains an even count of 1s.</small></button>
 </section>
-<div class="section-title" id="config"><div><h2>Machine workshop</h2><p>Configure the 7-tuple and write transitions in a compact, readable format.</p></div><span class="chip">DETERMINISTIC · 1 TAPE</span></div>
+<div class="section-title" id="config"><div><h2>Machine setup</h2><p>Set the machine, add rules, and run.</p></div><span class="chip">1 TAPE</span></div>
 <div id="notice" class="notice" role="status" aria-live="polite"></div>
 <section class="workspace">
   <div class="panel">
@@ -72,8 +120,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px;ma
             <div class="field"><label for="ruleWrite">Write on tape</label><input id="ruleWrite" placeholder="e.g. X"></div>
             <div class="field"><label for="ruleMove">Move head</label><select id="ruleMove"><option value="R">Right →</option><option value="L">Left ←</option></select></div>
           </div>
-          <button type="button" class="primary add-rule" onclick="addRuleFromFields()">＋ Add transition rule</button>
-          <div class="help">Example: If state is <b>q0</b> and the tape shows <b>1</b>, go to <b>q1</b>, write <b>X</b>, and move right.</div>
+          <div class="rule-actions"><button type="button" class="primary add-rule" onclick="addRuleFromFields()">＋ Add transition rule</button><button type="button" onclick="setRejectTarget()">＋ Set next state to reject</button></div>
+          <div class="help">Example: If state is <b>q0</b> and the tape shows <b>1</b>, go to <b>q1</b>, write <b>X</b>, and move right. To reject a case, set the next state to your reject state and add the rule.</div>
         </div>
         <label for="transitions" style="margin-top:14px">All transition rules <small>advanced edit · one per line</small></label>
         <textarea id="transitions" spellcheck="false"></textarea>
@@ -81,7 +129,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px;ma
       </div>
     </div>
     <div class="actions"><button class="primary" onclick="applyMachine()">Apply machine</button><button onclick="resetMachine()">Reset run</button><button class="subtle" onclick="loadPreset('custom')">Load example rules</button></div>
-    <div class="config-note"><b>Heads up:</b> the blank symbol must be in Γ, Σ must be a subset of Γ, and accept/reject states must be different. A missing transition causes the machine to halt as stuck—not automatically accept.</div>
+    <div class="config-note"><b>Heads up:</b> the blank symbol must be in Γ, Σ must be a subset of Γ, and accept/reject states must be different. Add explicit rules that lead to the reject state for inputs you want rejected. The reject state is a halting state, so it normally has no outgoing rules. A missing transition causes the machine to halt as stuck—not automatically reject.</div>
   </div>
   <div class="panel machine-panel">
     <div class="machine-top">
@@ -93,7 +141,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:18px;ma
         <div class="state-clock" id="stateClock" aria-label="Current state highlighted in state diagram">
           <svg class="clock-arrows" viewBox="0 0 320 180" aria-hidden="true"><defs><marker id="arrowHead" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64e6d2"/></marker></defs><path d="M160 28 Q242 18 270 62" fill="none" stroke="#52617e" stroke-width="2" marker-end="url(#arrowHead)"/><path d="M270 118 Q240 162 160 152" fill="none" stroke="#52617e" stroke-width="2" marker-end="url(#arrowHead)"/><path d="M160 152 Q75 162 50 118" fill="none" stroke="#52617e" stroke-width="2" marker-end="url(#arrowHead)"/><path d="M50 62 Q78 18 160 28" fill="none" stroke="#52617e" stroke-width="2" marker-end="url(#arrowHead)"/></svg>
           <div class="clock-hand" id="clockHand"><span></span></div>
-          <div class="state-node node-0" data-node="0">q0</div><div class="state-node node-1" data-node="1">q1</div><div class="state-node node-2" data-node="2">q2</div><div class="state-node node-3" data-node="3">q3</div>
+          <div class="state-nodes" id="stateNodes"></div>
           <div class="clock-center">δ</div>
         </div>
       </div>
@@ -129,12 +177,14 @@ qFind1, Y -> qFind1, Y, R
 qFind1, _ -> qCheck1, _, L
 qCheck0, 0 -> qReturn, X, L
 qCheck0, 1 -> qReject, 1, R
-qCheck0, X -> qAccept, X, R
-qCheck0, Y -> qAccept, Y, R
+qCheck0, X -> qCheck0, X, L
+qCheck0, Y -> qCheck0, Y, L
+qCheck0, _ -> qAccept, _, R
 qCheck1, 1 -> qReturn, Y, L
 qCheck1, 0 -> qReject, 0, R
-qCheck1, X -> qAccept, X, R
-qCheck1, Y -> qAccept, Y, R
+qCheck1, X -> qCheck1, X, L
+qCheck1, Y -> qCheck1, Y, L
+qCheck1, _ -> qAccept, _, R
 qReturn, 0 -> qReturn, 0, L
 qReturn, 1 -> qReturn, 1, L
 qReturn, X -> qReturn, X, L
@@ -162,6 +212,7 @@ q1, 1 -> qReject, 1, R`}
 let machine=null,tape=new Map(),head=0,state='',steps=0,halted=false,running=false,timer=null,trace=[],activePreset='palindrome';
 function parseList(s){return s.split(',').map(x=>x.trim()).filter(Boolean)}
 function addRuleFromFields(){const from=$('ruleFrom').value.trim(),read=$('ruleRead').value.trim(),to=$('ruleTo').value.trim(),write=$('ruleWrite').value.trim(),move=$('ruleMove').value;if(!from||!read||!to||!write){showNotice('Fill in current state, read symbol, next state, and write symbol first.','error');return}const line=`${from}, ${read} -> ${to}, ${write}, ${move}`;const box=$('transitions');box.value=box.value.trim()?box.value.trimEnd()+'\\n'+line:line;showNotice('Transition added to your rule list. Apply machine to validate it.');}
+function setRejectTarget(){const reject=$('reject').value.trim();if(!reject){showNotice('Enter a reject state name first.','error');return}$('ruleTo').value=reject;showNotice(`Next state set to ${reject}. Fill the other boxes and add the transition.`);}
 function showNotice(msg,type='ok'){const n=$('notice');n.textContent=msg;n.className='notice show '+type;clearTimeout(showNotice.t);showNotice.t=setTimeout(()=>n.className='notice',6000)}
 function loadPreset(name){const p=presets[name]||presets.custom;activePreset=name;['states','inputAlphabet','tapeAlphabet','blank','start','accept','reject','tapeInput','transitions'].forEach((id,i)=>$(id).value=[p.states,p.input,p.tape,p.blank,p.start,p.accept,p.reject,p.inputText,p.rules][i]);document.querySelectorAll('.preset').forEach(b=>b.classList.toggle('active',b.dataset.preset===name));applyMachine();if(name==='palindrome')showNotice('Palindrome preset loaded. This starter version marks symbols and scans to the right; use the trace to inspect its behavior.');}
 function parseMachine(){
@@ -188,7 +239,36 @@ function stepMachine(){if(!machine||halted)return;const read=readCell(head);if(s
  render();}
 function toggleRun(){if(running){stopRun();return}if(halted)return;running=true;$('runBtn').textContent='Ⅱ Pause';const tick=()=>{if(!running)return;stepMachine();if(running&&!halted)timer=setTimeout(tick,Math.max(35,700-Number($('speed').value)*65));else stopRun()};tick()}
 function stopRun(){running=false;if(timer)clearTimeout(timer);timer=null;if($('runBtn'))$('runBtn').textContent='▶ Run'}
-function renderStateClock(){if(!machine)return;const nodes=[...document.querySelectorAll('.state-node')];const core=machine.states.filter(s=>s!==machine.accept&&s!==machine.reject);nodes.forEach((node,i)=>{const name=core[i]||machine.accept;node.textContent=name;node.dataset.state=name;node.classList.toggle('active',state===name);node.classList.toggle('accept',state===machine.accept&&name===machine.accept);node.classList.toggle('reject',state===machine.reject&&name===machine.reject)});$('clockStateLabel').textContent=state;const idx=Math.max(0,core.indexOf(state));$('clockHand').style.transform=`rotate(${idx*90}deg)`;}
+function renderStateClock(){
+ if(!machine) return;
+ const layer=$('stateNodes');
+ const names=[...new Set(machine.states)];
+ layer.innerHTML='';
+ const n=names.length;
+ // Keep a generous radius so labels do not overlap the center or one another.
+ const rx= n<=4 ? 39 : n<=8 ? 43 : 46;
+ const ry= n<=4 ? 39 : n<=8 ? 43 : 46;
+ names.forEach((name,i)=>{
+   const angle=(-90+(360*i/n))*Math.PI/180;
+   const node=document.createElement('div');
+   node.className='state-node';
+   if(state===name) node.classList.add('active');
+   if(name===machine.accept) node.classList.add('accept');
+   if(name===machine.reject) node.classList.add('reject');
+   node.textContent=name;
+   node.dataset.state=name;
+   node.setAttribute('aria-label', name+(name===machine.start?' (start state)':name===machine.accept?' (accept state)':name===machine.reject?' (reject state)':''));
+   node.title=name===machine.start?'Start state':name===machine.accept?'Accept state':name===machine.reject?'Reject state':'State';
+   node.style.left=(50+rx*Math.cos(angle))+'%';
+   node.style.top=(50+ry*Math.sin(angle))+'%';
+   layer.appendChild(node);
+ });
+ $('clockStateLabel').textContent=state;
+ // Pointer targets the active node's angular position, not a guessed fixed 90° slot.
+ const activeIndex=names.indexOf(state);
+ const angle=activeIndex<0?0:(360*activeIndex/n);
+ $('clockHand').style.transform=`rotate(${angle}deg)`;
+}
 function render(){if(!machine)return;$('currentState').textContent=state;renderStateClock();$('headPosition').textContent=head;$('stepCount').textContent=steps;const lo=Math.min(head-5,...Array.from(tape.keys()),-5),hi=Math.max(head+8,...Array.from(tape.keys()),8);$('tapeRange').textContent=`${lo} … ${hi}`;const el=$('tape');el.innerHTML='';for(let i=lo;i<=hi;i++){const c=document.createElement('div');c.className='cell'+(i===head?' head':'')+(readCell(i)===machine.blank?' blank':'');c.textContent=readCell(i);c.title=`Cell ${i}`;el.appendChild(c)}const h=el.querySelector('.head');if(h)h.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});$('traceCount').textContent=`${trace.length} event${trace.length===1?'':'s'}`;const tr=$('trace');tr.innerHTML='';if(!trace.length)tr.innerHTML='<div class="empty">Press <b>Step</b> or <b>Run</b> to watch the machine work.</div>';trace.slice(0,100).forEach((t,i)=>{const d=document.createElement('div');d.className='trace-item'+(i===0?' current':'');const n=document.createElement('span');n.className='n';n.textContent=String(t.n).padStart(3,'0');const m=document.createElement('span');m.textContent=t.msg;d.append(n,m);tr.appendChild(d)});if(!halted)$('runBadge').textContent=steps?'RUNNING':'READY';$('stepBtn').disabled=halted;$('runBtn').disabled=halted}
 $('speed').addEventListener('input',()=>$('speedLabel').textContent=$('speed').value+'×');
 loadPreset('palindrome');
