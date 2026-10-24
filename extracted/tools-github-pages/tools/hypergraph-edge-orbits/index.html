@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hypergraph Edge Orbits</title>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root {
+      --ink: #17233c;
+      --muted: #66738e;
+      --line: #e1e8f5;
+      --purple: #6845e8;
+      --blue: #2787ee;
+      --pink: #ed5caa;
+      --mint: #dffaf0;
+      --surface: rgba(255,255,255,.92);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 8%, #e5dcff 0, transparent 28rem),
+        radial-gradient(circle at 95% 15%, #d6f6ff 0, transparent 25rem),
+        linear-gradient(145deg, #f7f8ff, #f0faff 55%, #fff3fa);
+    }
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 36px 0 52px; }
+    header { margin-bottom: 24px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px;
+      color: #5736c8; background: #eee9ff; border: 1px solid #ddd3ff;
+      border-radius: 999px; font-size: .78rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+    }
+    h1 { font-size: clamp(2rem, 5vw, 3.3rem); line-height: 1.08; letter-spacing: -.045em; margin: 16px 0 10px; }
+    h1 span { background: linear-gradient(90deg, var(--purple), var(--blue), var(--pink)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { color: var(--muted); max-width: 760px; line-height: 1.65; margin: 0; }
+    .layout { display: grid; grid-template-columns: minmax(280px, 390px) minmax(0, 1fr); gap: 20px; align-items: start; }
+    .panel {
+      background: var(--surface); border: 1px solid rgba(215,224,243,.9); border-radius: 22px;
+      box-shadow: 0 16px 45px rgba(45, 64, 120, .09); overflow: hidden;
+    }
+    .panel-head { padding: 20px 22px 16px; border-bottom: 1px solid var(--line); background: linear-gradient(110deg, #fff, #f7f4ff); }
+    .panel-head h2 { font-size: 1.08rem; margin: 0 0 5px; }
+    .panel-head p { font-size: .87rem; line-height: 1.5; color: var(--muted); margin: 0; }
+    .panel-body { padding: 20px 22px 22px; }
+    label { display: block; font-size: .88rem; font-weight: 750; margin: 0 0 8px; }
+    .hint { font-size: .79rem; color: var(--muted); margin: -2px 0 9px; line-height: 1.5; }
+    textarea, input {
+      width: 100%; border: 1px solid #d7deef; background: #fbfcff; border-radius: 12px;
+      padding: 12px 13px; color: var(--ink); font: 500 .92rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+      outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    textarea { resize: vertical; min-height: 116px; }
+    input:focus, textarea:focus { border-color: #8c75f1; box-shadow: 0 0 0 4px rgba(104,69,232,.11); }
+    .field { margin-bottom: 18px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    button {
+      border: 0; border-radius: 12px; padding: 12px 16px; font: 750 .9rem inherit; font-weight: 750;
+      cursor: pointer; transition: transform .15s, box-shadow .15s, opacity .15s;
+    }
+    button:hover { transform: translateY(-1px); }
+    .primary { color: white; background: linear-gradient(100deg, var(--purple), #387eea); box-shadow: 0 8px 18px rgba(91,76,216,.24); flex: 1; }
+    .secondary { color: #4c3ab3; background: #efebff; }
+    .error { display: none; margin-top: 15px; padding: 12px 13px; border-radius: 12px; background: #fff0f2; color: #a72b49; border: 1px solid #ffd4dc; font-size: .86rem; line-height: 1.5; }
+    .result-panel { min-width: 0; }
+    .result-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 22px; border-bottom: 1px solid var(--line); }
+    .result-top h2 { margin: 0; font-size: 1.1rem; }
+    .pill { display: inline-flex; border-radius: 999px; padding: 7px 10px; background: #e4f9f1; color: #14795c; font-size: .78rem; font-weight: 800; }
+    .summary { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; padding: 16px 20px 0; }
+    .stat { border-radius: 14px; padding: 13px; background: #f5f3ff; border: 1px solid #e7e1ff; }
+    .stat:nth-child(2) { background: #eef8ff; border-color: #d9edff; }
+    .stat:nth-child(3) { background: #fff1f8; border-color: #ffe0ef; }
+    .stat strong { display: block; font-size: 1.25rem; letter-spacing: -.03em; }
+    .stat span { color: var(--muted); font-size: .75rem; }
+    .table-wrap { overflow: auto; padding: 18px 20px 22px; }
+    table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 420px; font-size: .91rem; }
+    th, td { padding: 13px 15px; text-align: center; border-right: 1px solid #e4e9f5; border-bottom: 1px solid #e4e9f5; }
+    th { color: #fff; background: linear-gradient(110deg, #6445d8, #3885e8); font-weight: 800; white-space: nowrap; }
+    th:first-child { border-top-left-radius: 12px; }
+    th:last-child { border-top-right-radius: 12px; }
+    td { background: #fff; white-space: nowrap; }
+    tbody tr:nth-child(even) td { background: #f8faff; }
+    tbody tr:hover td { background: #f0edff; }
+    td:first-child { font-weight: 800; color: #6344cf; background: #f4f0ff; }
+    .empty { padding: 55px 28px; text-align: center; color: var(--muted); }
+    .empty .symbol { font-size: 2.4rem; margin-bottom: 12px; }
+    .empty h3 { color: var(--ink); margin: 0 0 8px; }
+    .empty p { margin: 0 auto; max-width: 390px; line-height: 1.6; font-size: .9rem; }
+    .footnote { color: var(--muted); font-size: .8rem; line-height: 1.55; padding: 0 22px 20px; }
+
+    .graph-tools { display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:16px 20px 0; }
+    .graph-tools button { padding:9px 12px; font-size:.82rem; color:#4c3ab3; background:#efebff; }
+    .graph-tools .active { color:#fff; background:linear-gradient(100deg,var(--purple),#3885e8); }
+    .graph-note { padding:10px 22px 0; color:var(--muted); font-size:.82rem; line-height:1.5; }
+    .graph-canvas-wrap { padding:12px 16px 20px; }
+    #orbitGraph { display:block; width:100%; height:clamp(300px,46vw,510px); background:linear-gradient(145deg,#fbfcff,#f5f2ff); border:1px solid var(--line); border-radius:16px; touch-action:pan-y; }
+    .graph-legend { display:flex; flex-wrap:wrap; gap:10px 16px; padding:0 22px 20px; color:var(--muted); font-size:.8rem; }
+    .legend-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+
+    code { background: #f0edff; padding: 2px 5px; border-radius: 5px; }
+    @media (max-width: 820px) {
+      .layout { grid-template-columns: 1fr; }
+      .wrap { width: min(100% - 22px, 720px); padding-top: 24px; }
+    }
+    @media (max-width: 480px) {
+      .panel-head, .panel-body, .result-top { padding-left: 16px; padding-right: 16px; }
+      .summary { padding-left: 12px; padding-right: 12px; gap: 7px; }
+      .stat { padding: 10px 8px; }
+      .stat strong { font-size: 1.05rem; }
+      .table-wrap { padding: 14px 12px 18px; }
+      th, td { padding: 11px 12px; }
+    }
+  </style>
+</head>
+<body>
+<a href="../../index.html" aria-label="Back to all tools" style="position:sticky;top:8px;z-index:9999;display:inline-flex;gap:8px;margin:8px;padding:9px 13px;border:1px solid #8993a866;border-radius:999px;background:rgba(20,27,43,.92);color:#fff;text-decoration:none;font:600 13px/1.2 system-ui,sans-serif;box-shadow:0 4px 16px #0002">← All tools</a>
+
+  <main class="wrap">
+    <header>
+      <div class="eyebrow">✦ Discrete mathematics · Orbit explorer</div>
+      <h1>Hypergraph <span>Edge Orbits</span></h1>
+      <p class="lead">Enter the edges of a hypergraph and a permutation of its vertices. Generate a table showing each edge's successive images under the permutation.</p>
+    </header>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>01 · Define your hypergraph</h2>
+          <p>Use braces or plain comma-separated vertices. Separate edges with commas or new lines.</p>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <label for="edges">Edge sets</label>
+            <p class="hint">Example: {1,2}, {2,3}, {1,3}</p>
+            <textarea id="edges" spellcheck="false">{1,2}, {2,3}, {1,3}</textarea>
+          </div>
+          <div class="field">
+            <label for="permutation">Permutation of vertices</label>
+            <p class="hint">Enter a cycle, e.g. (1 2 3), or a mapping, e.g. 1→2, 2→3, 3→1.</p>
+            <input id="permutation" spellcheck="false" value="(1 2 3)" />
+          </div>
+          <div class="actions">
+            <button class="primary" id="generate">Generate orbit table ↗</button>
+            <button class="secondary" id="reset" type="button">Reset</button>
+          </div>
+          <div class="error" id="error" role="alert"></div>
+        </div>
+      </section>
+
+      <section class="panel result-panel" aria-live="polite">
+        <div class="result-top">
+          <h2>02 · Orbit table</h2>
+          <span class="pill" id="status">Ready to generate</span>
+        </div>
+        <div id="results">
+          <div class="empty">
+            <div class="symbol">✧</div>
+            <h3>Your table will appear here</h3>
+            <p>Each edge gets its own column, labeled \(E_1, E_2, \ldots\). Rows show the edge images after applying the permutation repeatedly.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <section class="panel" style="margin-top:20px">
+      <div class="result-top">
+        <h2>03 · Edge-orbit graph</h2>
+        <span class="pill" id="graphStatus">Waiting for input</span>
+      </div>
+      <p class="graph-note">Each vertex represents one input edge. Two vertices are connected exactly when their edges belong to the same orbit under the permutation. Vertices in the same orbit share a color. Drag vertices to rearrange the graph.</p>
+      <div class="graph-tools">
+        <button type="button" id="zoomIn">＋ Zoom in</button>
+        <button type="button" id="zoomOut">－ Zoom out</button>
+        <button type="button" id="resetGraph">Reset layout</button>
+        <button type="button" id="toggleLabels" class="active">Hide labels</button>
+      </div>
+      <div class="graph-canvas-wrap">
+        <svg id="orbitGraph" viewBox="0 0 900 480" role="img" aria-label="Interactive graph of edge orbits">
+          <text x="450" y="230" text-anchor="middle" fill="#66738e" font-size="17">Generate the orbit table to draw the graph.</text>
+        </svg>
+      </div>
+      <div class="graph-legend" id="graphLegend"></div>
+    </section>
+
+    <p class="footnote">Convention: row \(k\) displays \(\sigma^k(E_i)\), where \(\sigma^0(E_i)=E_i\). The table includes enough rows to show each edge orbit once, up to the maximum edge-orbit length. In the graph, every pair of input edges in the same permutation orbit is connected. Math labels are rendered with MathJax when available.</p>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const defaultEdges = "{1,2}, {2,3}, {1,3}";
+    const defaultPermutation = "(1 2 3)";
+
+    function showError(message) {
+      const el = $("error");
+      el.textContent = message;
+      el.style.display = "block";
+    }
+    function clearError() {
+      $("error").textContent = "";
+      $("error").style.display = "none";
+    }
+
+    // Split edge notation on commas only when they are outside braces.
+    function parseEdges(text) {
+      const source = text.trim();
+      if (!source) throw new Error("Please enter at least one edge.");
+      const parts = [];
+      let depth = 0, start = 0;
+      for (let i = 0; i < source.length; i++) {
+        if (source[i] === "{") depth++;
+        if (source[i] === "}") depth--;
+        if (depth < 0) throw new Error("An edge has a closing brace without an opening brace.");
+        if (depth === 0 && (source[i] === "," || source[i] === "\n" || source[i] === ";")) {
+          const part = source.slice(start, i).trim();
+          if (part) parts.push(part);
+          start = i + 1;
+        }
+      }
+      if (depth !== 0) throw new Error("Please balance the braces in your edge sets.");
+      const last = source.slice(start).trim();
+      if (last) parts.push(last);
+
+      return parts.map((part, index) => {
+        const cleaned = part.replace(/^[{[(]\s*/, "").replace(/\s*[})\]]$/, "").trim();
+        if (!cleaned) throw new Error(`Edge E${index + 1} is empty or malformed.`);
+        const vertices = cleaned.split(/[\s,]+/).filter(Boolean);
+        const edge = [...new Set(vertices)];
+        if (edge.length === 0) throw new Error(`Edge E${index + 1} contains no vertices.`);
+        return edge;
+      });
+    }
+
+    function parsePermutation(text) {
+      const source = text.trim();
+      if (!source) throw new Error("Please enter a permutation.");
+      const map = new Map();
+
+      // Cycle notation, including multiple disjoint cycles: (1 2 3)(4 5)
+      const cycles = [...source.matchAll(/\(([^()]*)\)/g)];
+      if (cycles.length && source.replace(/\([^()]*\)/g, "").trim() === "") {
+        for (const match of cycles) {
+          const cycle = match[1].trim().split(/[\s,]+/).filter(Boolean);
+          if (cycle.length < 1) continue;
+          for (let i = 0; i < cycle.length; i++) {
+            const from = cycle[i], to = cycle[(i + 1) % cycle.length];
+            if (map.has(from) && map.get(from) !== to) throw new Error(`Vertex ${from} is assigned more than once in the cycle notation.`);
+            map.set(from, to);
+          }
+        }
+      } else {
+        // Mapping notation: 1->2, 2->3, 3->1 (also accepts → or :)
+        const pairs = source.split(/[,\n;]+/).map(s => s.trim()).filter(Boolean);
+        for (const pair of pairs) {
+          const match = pair.match(/^\s*(.*?)\s*(?:->|→|↦|:)\s*(.*?)\s*$/);
+          if (!match) throw new Error("Use cycle notation like (1 2 3), or mapping notation like 1→2, 2→3, 3→1.");
+          const from = match[1].trim(), to = match[2].trim();
+          if (!from || !to) throw new Error("Each mapping must have both a source and a destination.");
+          if (map.has(from) && map.get(from) !== to) throw new Error(`Vertex ${from} has more than one image.`);
+          map.set(from, to);
+        }
+      }
+      if (map.size === 0) throw new Error("Could not read the permutation.");
+      const images = [...map.values()];
+      if (new Set(images).size !== images.length) throw new Error("This mapping is not one-to-one, so it is not a permutation.");
+      for (const image of images) {
+        if (!map.has(image)) throw new Error(`The permutation is incomplete: ${image} has no specified image. Include fixed vertices as 1→1, or use cycle notation for moved vertices.`);
+      }
+      return map;
+    }
+
+    function applyPermutation(edge, permutation) {
+      return edge.map(v => {
+        if (!permutation.has(v)) {
+          throw new Error(`Vertex ${v} appears in an edge but is not defined in the permutation. Include it as a fixed point (for example, ${v}→${v}) or in cycle notation.`);
+        }
+        return permutation.get(v);
+      }).sort(compareVertices);
+    }
+
+    function compareVertices(a, b) {
+      const na = Number(a), nb = Number(b);
+      if (a.trim() !== "" && b.trim() !== "" && Number.isFinite(na) && Number.isFinite(nb)) return na - nb;
+      return a.localeCompare(b, undefined, { numeric: true });
+    }
+
+    function edgeKey(edge) { return JSON.stringify([...edge].sort(compareVertices)); }
+    function edgeLatex(edge) { return "\\\\{" + edge.map(escapeLatex).join(",") + "\\\\}"; }
+    function escapeLatex(value) {
+      return String(value).replace(/\\/g, "\\textbackslash ").replace(/([{}_#$%&])/g, "\\$1");
+    }
+
+    function orbitFor(edge, permutation) {
+      const orbit = [];
+      const seen = new Set();
+      let current = [...edge];
+      while (!seen.has(edgeKey(current))) {
+        seen.add(edgeKey(current));
+        orbit.push(current);
+        current = applyPermutation(current, permutation);
+      }
+      return orbit;
+    }
+
+
+    const graphState = { nodes: [], links: [], scale: 1, showLabels: true, dragging: null };
+    const orbitColors = ["#6845e8", "#2787ee", "#e653a6", "#0f9d83", "#e58a22", "#7b61a8", "#d64f4f", "#4e9b45"];
+
+    function svgEl(tag, attrs = {}) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+      return el;
+    }
+
+    function drawGraph(edges, orbits) {
+      const orbitLookup = new Map();
+      orbits.forEach((orbit, orbitIndex) => orbit.forEach(edge => {
+        if (!orbitLookup.has(edgeKey(edge))) orbitLookup.set(edgeKey(edge), orbitIndex);
+      }));
+      const n = edges.length;
+      graphState.nodes = edges.map((edge, i) => ({
+        id:i, label:`E${i+1}`, edge:[...edge], orbit:orbitLookup.get(edgeKey(edge)) ?? i,
+        color:orbitColors[(orbitLookup.get(edgeKey(edge)) ?? i) % orbitColors.length],
+        x:450 + Math.cos(2*Math.PI*i/Math.max(n,1)-Math.PI/2)*Math.min(180,105+n*5),
+        y:240 + Math.sin(2*Math.PI*i/Math.max(n,1)-Math.PI/2)*Math.min(145,80+n*4)
+      }));
+      graphState.links = [];
+      // A complete connection is drawn within each orbit.
+      for (let i=0;i<n;i++) for (let j=i+1;j<n;j++) {
+        if (graphState.nodes[i].orbit === graphState.nodes[j].orbit) graphState.links.push([i,j]);
+      }
+      graphState.scale = 1;
+      renderGraph();
+      $("graphStatus").textContent = `${n} vertices · ${graphState.links.length} connections`;
+      const legend = $("graphLegend"); legend.innerHTML = "";
+      [...new Set(graphState.nodes.map(node=>node.orbit))].forEach((orbit, i) => {
+        const node = graphState.nodes.find(node=>node.orbit===orbit);
+        const count = graphState.nodes.filter(node=>node.orbit===orbit).length;
+        const item = document.createElement("span");
+        const dot = document.createElement("i"); dot.className="legend-dot"; dot.style.background=node.color;
+        item.append(dot, document.createTextNode(`Orbit ${i+1}: ${count} edge${count===1?"":"s"}`));
+        legend.appendChild(item);
+      });
+    }
+
+    function renderGraph() {
+      const svg=$("orbitGraph"); svg.innerHTML="";
+      const group=svgEl("g",{transform:`translate(450 240) scale(${graphState.scale}) translate(-450 -240)`});
+      svg.appendChild(group);
+      graphState.links.forEach(([a,b])=>{
+        const x=graphState.nodes[a], y=graphState.nodes[b];
+        group.appendChild(svgEl("line",{x1:x.x,y1:x.y,x2:y.x,y2:y.y,stroke:x.color,"stroke-width":2.5,"stroke-opacity":.52}));
+      });
+      graphState.nodes.forEach(node=>{
+        const g=svgEl("g",{tabindex:"0",role:"button","aria-label":`${node.label}: {${node.edge.join(", ")}}`});
+        g.style.cursor="grab";
+        g.appendChild(svgEl("circle",{cx:node.x,cy:node.y,r:25,fill:node.color,"fill-opacity":.14,stroke:node.color,"stroke-width":2}));
+        g.appendChild(svgEl("circle",{cx:node.x,cy:node.y,r:20,fill:node.color}));
+        const t=svgEl("text",{x:node.x,y:node.y+5,"text-anchor":"middle",fill:"#fff","font-size":13,"font-weight":800});
+        t.textContent=node.label; g.appendChild(t);
+        if(graphState.showLabels){
+          const label=svgEl("text",{x:node.x,y:node.y+42,"text-anchor":"middle",fill:"#27334d","font-size":13,"font-weight":650});
+          label.textContent=`{${node.edge.join(", ")}}`; g.appendChild(label);
+        }
+        const title=svgEl("title"); title.textContent=`${node.label} = {${node.edge.join(", ")}} · Orbit ${node.orbit+1}`; g.appendChild(title);
+        g.addEventListener("pointerdown",e=>{graphState.dragging={id:node.id,pointerId:e.pointerId}; svg.setPointerCapture?.(e.pointerId); e.preventDefault();});
+        g.addEventListener("keydown",e=>{
+          const d=e.shiftKey?20:8;
+          if(e.key==="ArrowLeft") node.x-=d; else if(e.key==="ArrowRight") node.x+=d;
+          else if(e.key==="ArrowUp") node.y-=d; else if(e.key==="ArrowDown") node.y+=d; else return;
+          e.preventDefault(); renderGraph();
+        });
+        group.appendChild(g);
+      });
+    }
+
+    $("orbitGraph").addEventListener("pointermove",e=>{
+      if(!graphState.dragging) return;
+      const rect=$("orbitGraph").getBoundingClientRect();
+      const node=graphState.nodes[graphState.dragging.id];
+      node.x=Math.max(30,Math.min(870,(e.clientX-rect.left)*900/rect.width));
+      node.y=Math.max(30,Math.min(450,(e.clientY-rect.top)*480/rect.height));
+      renderGraph();
+    });
+    $("orbitGraph").addEventListener("pointerup",()=>graphState.dragging=null);
+    $("orbitGraph").addEventListener("pointercancel",()=>graphState.dragging=null);
+    $("zoomIn").addEventListener("click",()=>{graphState.scale=Math.min(2.2,graphState.scale*1.15);renderGraph();});
+    $("zoomOut").addEventListener("click",()=>{graphState.scale=Math.max(.55,graphState.scale/1.15);renderGraph();});
+    $("toggleLabels").addEventListener("click",()=>{
+      graphState.showLabels=!graphState.showLabels;
+      $("toggleLabels").classList.toggle("active",graphState.showLabels);
+      $("toggleLabels").textContent=graphState.showLabels?"Hide labels":"Show labels";
+      renderGraph();
+    });
+    $("resetGraph").addEventListener("click",()=>{
+      const n=graphState.nodes.length;
+      graphState.nodes.forEach((node,i)=>{
+        node.x=450+Math.cos(2*Math.PI*i/Math.max(n,1)-Math.PI/2)*Math.min(180,105+n*5);
+        node.y=240+Math.sin(2*Math.PI*i/Math.max(n,1)-Math.PI/2)*Math.min(145,80+n*4);
+      });
+      graphState.scale=1; renderGraph();
+    });
+
+    function generate() {
+      clearError();
+      try {
+        const edges = parseEdges($("edges").value);
+        const permutation = parsePermutation($("permutation").value);
+        const orbits = edges.map(edge => orbitFor(edge, permutation));
+        const rowCount = Math.max(...orbits.map(orbit => orbit.length));
+        const totalVertices = new Set(edges.flat()).size;
+
+        let html = '<div class="summary">' +
+          `<div class="stat"><strong>${edges.length}</strong><span>Input edges</span></div>` +
+          `<div class="stat"><strong>${rowCount}</strong><span>Table rows</span></div>` +
+          `<div class="stat"><strong>${totalVertices}</strong><span>Distinct vertices</span></div>` +
+          '</div><div class="table-wrap"><table><thead><tr><th>\\(k\\)</th>';
+        edges.forEach((_, i) => { html += `<th>\\(E_{${i + 1}}\\)</th>`; });
+        html += '</tr></thead><tbody>';
+        for (let row = 0; row < rowCount; row++) {
+          html += `<tr><td>${row}</td>`;
+          orbits.forEach(orbit => {
+            if (row < orbit.length) html += `<td>\\(${edgeLatex(orbit[row])}\\)</td>`;
+            else html += '<td>—</td>';
+          });
+          html += '</tr>';
+        }
+        html += '</tbody></table></div>';
+        $("results").innerHTML = html;
+        $("status").textContent = "Table generated";
+        drawGraph(edges, orbits);
+        if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([$ ("results")]);
+      } catch (error) {
+        showError(error.message || "Something went wrong. Check your input.");
+      }
+    }
+
+    $("generate").addEventListener("click", generate);
+    $("reset").addEventListener("click", () => {
+      $("edges").value = defaultEdges;
+      $("permutation").value = defaultPermutation;
+      $("results").innerHTML = '<div class="empty"><div class="symbol">✧</div><h3>Your table will appear here</h3><p>Each edge gets its own column, labeled \\(E_1, E_2, \\ldots\\). Rows show the edge images after applying the permutation repeatedly.</p></div>';
+      $("status").textContent = "Ready to generate";
+      $("graphStatus").textContent = "Waiting for input";
+      $("orbitGraph").innerHTML = '<text x="450" y="230" text-anchor="middle" fill="#66738e" font-size="17">Generate the orbit table to draw the graph.</text>';
+      $("graphLegend").innerHTML = "";
+      graphState.nodes = []; graphState.links = [];
+      clearError();
+      if (window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise([$ ("results")]);
+    });
+    generate();
+  </script>
+</body>
+</html>

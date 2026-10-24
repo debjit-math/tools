@@ -1,0 +1,121 @@
+[
+  {
+    "name": "Hypergraph Studio",
+    "slug": "hypergraph-studio",
+    "category": "Hypergraph",
+    "description": "Build, visualize, and analyze hypergraphs with interactive graph views, permutations, automorphisms, matrices, and spectral information.",
+    "icon": "◈",
+    "tags": [
+      "visualization",
+      "graph",
+      "mathematics",
+      "hypergraph"
+    ]
+  },
+  {
+    "name": "Isomorphism & Spectral Analyzer",
+    "slug": "hypergraph-isomorphism-spectral-analyzer",
+    "category": "Hypergraph",
+    "description": "Compare hypergraphs for isomorphism and inspect spectral invariants with interactive analysis.",
+    "icon": "⌘",
+    "tags": [
+      "isomorphism",
+      "spectrum",
+      "comparison",
+      "hypergraph"
+    ]
+  },
+  {
+    "name": "Hypergraph Edge Orbits",
+    "slug": "hypergraph-edge-orbits",
+    "category": "Hypergraph",
+    "description": "Generate edge-orbit tables under vertex permutations and explore the orbit graph interactively.",
+    "icon": "◎",
+    "tags": [
+      "orbits",
+      "permutation",
+      "edges",
+      "hypergraph"
+    ]
+  },
+  {
+    "name": "Transversal & Hitting-Set Solver",
+    "slug": "transversal-hitting-set-solver",
+    "category": "Hypergraph",
+    "description": "Find minimum transversals and enumerate minimal hitting sets, with edge coverage inspection.",
+    "icon": "⊹",
+    "tags": [
+      "solver",
+      "transversal",
+      "hitting set",
+      "hypergraph"
+    ]
+  },
+  {
+    "name": "Hypergraph Coloring Solver",
+    "slug": "hypergraph-coloring-solver",
+    "category": "Hypergraph",
+    "description": "Explore weak and strong vertex colorings and search for colorings with fewer colors.",
+    "icon": "▦",
+    "tags": [
+      "coloring",
+      "solver",
+      "vertices",
+      "hypergraph"
+    ]
+  },
+  {
+    "name": "Automorphism Group Explorer",
+    "slug": "automorphism-group-explorer",
+    "category": "Hypergraph",
+    "description": "Explore vertex symmetries, calculate automorphism group order, and identify vertex orbits.",
+    "icon": "⟳",
+    "tags": [
+      "symmetry",
+      "automorphism",
+      "group",
+      "hypergraph"
+    ]
+  },
+  {
+    "name": "Matching & Packing Solver",
+    "slug": "matching-packing-solver",
+    "category": "Hypergraph",
+    "description": "Find maximum or maximal matchings and inspect selected edges, with JSON export.",
+    "icon": "⛓",
+    "tags": [
+      "matching",
+      "packing",
+      "solver",
+      "hypergraph"
+    ]
+  },
+  {
+    "name": "Turing Lab — Machine Simulator",
+    "slug": "turing-machine-simulator",
+    "category": "Computer Science",
+    "description": "Build deterministic Turing machines, edit transition rules, and watch tape execution step by step.",
+    "icon": "δ",
+    "tags": [
+      "turing machine",
+      "automata",
+      "computation",
+      "simulator",
+      "computer science"
+    ]
+  },
+  {
+    "name": "Probability, PMF & Entropy Lab",
+    "slug": "probability-pmf-entropy-lab",
+    "category": "Mathematics",
+    "description": "Explore probability mass functions, entropy, sums of random variables, and convolution with live charts.",
+    "icon": "∑",
+    "tags": [
+      "probability",
+      "pmf",
+      "entropy",
+      "convolution",
+      "statistics"
+    ]
+  }
+]
